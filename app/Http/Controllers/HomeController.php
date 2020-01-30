@@ -3,17 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    private $user;
+
+
+    public function __construct(User $user)
     {
+        $this->user = $user;          
         $this->middleware('auth');
+        
     }
 
     /**
@@ -23,6 +24,17 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $users = $this->user->all();    
+        return view('home', compact('users'));
+    }
+
+    public function teste()
+    {
+        $nome = "Guilherme";
+        $nome2 = "Guilherme";
+
+        //dd($nome);
+        // Passa a variável pra view
+        return view('teste', compact('nome', 'nome2'));
     }
 }
