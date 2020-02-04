@@ -16,3 +16,4 @@ Route::get('/teste', 'HomeController@teste')->middleware('auth');
         return view('welcome');
     });
 });
+*/
