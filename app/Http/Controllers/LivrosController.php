@@ -3,9 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Livro;
 
 class LivrosController extends Controller
 {
+
+    private $livro;
+
+    public function __construct(Livro $livro){
+        $this->livro = $livro;
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -80,5 +89,49 @@ class LivrosController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function teste(){
+
+        $insert = $this->livro->create([
+           'titulo'  => 'Título do Livro 02',
+           'autor' => 'Fulano de Tal', 
+           'dataAquisicao'  => '2019-09-02',
+           'genero' => 'Romance',
+           'valor' => 20,
+           'observacoes' => 'Algumas observações sobre o livro...',
+           'lido' => 'sim',
+           'tipo' => 'fisico',
+           'sinopse' => 'Sinopse do livro blá, blá, blá, mi mi mi ...',
+       ]);
+
+        if ($insert){
+            return "Inserido com sucesso ID: {$insert->id}";
+        } else {
+            return 'Deu ruim';
+        }
+    }
+
+    public function testeUpdate(){
+
+        $liv = $this->livro->find(5);
+
+        $update = $liv->update([
+           'titulo'  => 'Update',
+           'autor' => 'Fulano de Tal', 
+           'dataAquisicao'  => '2019-09-02',
+           'genero' => 'Romance',
+           'valor' => 20,
+           'observacoes' => 'Algumas observações sobre o livro...',
+           'lido' => 'sim',
+           'tipo' => 'fisico',
+           'sinopse' => 'Sinopse do livro blá, blá, blá, mi mi mi ...',
+       ]);
+
+        if ($update){
+            return "Alterado com sucesso";
+        } else {
+            return 'Deu ruim';
+        }
     }
 }
